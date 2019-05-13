@@ -16,9 +16,10 @@ def broadcast(pos):
 
 def client(c,addr):
     print("Got connection from ", addr)
-    conn.append(c)
+    connections.append(c)
     while True:
         data = c.recv(1024)
+        data = str(addr) +'/' + data
         broadcast(data)
 
 while True:
