@@ -30,11 +30,23 @@ spritex=200
 spritey=130
 direction=DOWN
 def serve(s):
+    global spritex,spritey
     while True:
         data = s.recv(1024)
-        details = data.split('/')
-        coordinates = (details[1],details[2])
-        gamers[details[0]] = coordinates
+        data=data.decode()
+        print("Data="+data)   
+        if data=="UP":
+            spritey-=5
+        if data=="DOWN":
+            spritey+=5
+        if data=="LEFT":
+            spritex-=5
+        if data=="RIGHT":
+            spritex+=5
+        pygame.display.update()
+        fpsClock.tick(FPS)
+
+        time.sleep(0.5)
 
 thread1 = threading.Thread(target = serve, args = (s,))
 thread1.start()
@@ -74,6 +86,6 @@ while True:
     pygame.display.update()
     fpsClock.tick(FPS)
     
-    print(gamers)
+    #print(gamers)
     #print(x,y)
 s.close()

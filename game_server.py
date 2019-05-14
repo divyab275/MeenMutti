@@ -11,16 +11,18 @@ s.listen(5)
 print ("socket is listening")
 connections = []	
 
-def broadcast(pos):
+def broadcast(pos,con):
     for conn in connections:
-        conn.send(pos)
+        if conn!=con:
+                conn.send(pos)
 
 def client(c,addr):
     print("Got connection from ", addr)
     connections.append(c)
     while True:
         data = c.recv(1024)
-        print(data.decode())
+        #print(data.decode())
+        broadcast(data,c)
         time.sleep(0.5)
         # data = str(addr) +'/' + data
         # broadcast(data)
