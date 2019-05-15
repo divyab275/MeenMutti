@@ -5,15 +5,14 @@ import threading
 import pygame, sys, time
 from pygame.locals import *
 pygame.init()
-s = socket.socket()		 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)		 
 port = 12345				
-s.connect(('127.0.0.1', port))
+s.connect(('127.0.0.1', port)) #Obtaining connection to server
 ev=""
 
-gamers = {} # Dictionary that contains as key the addr of client connection and value (x,y) coordinates
 FPS=30
 fpsClock=pygame.time.Clock()
-
+#Game Window Settings
 width=700
 height=450
 DISPLAYSURF=pygame.display.set_mode((width,height),0,32)
@@ -41,7 +40,7 @@ def left():
 def right():
     global spritex,spritey
     spritex+=5
-def serve(s):
+def serve(s): #function receiving movements from other clients
     global spritex,spritey
     while True:
         data = s.recv(1024)
@@ -63,12 +62,12 @@ def serve(s):
 thread1 = threading.Thread(target = serve, args = (s,))
 thread1.start()
 
-while True:
+while True: #listening for keyboard events
     DISPLAYSURF.blit(background,(0,0))
 
     DISPLAYSURF.blit(sprite,(spritex,spritey))
 
-    for event in pygame.event.get():
+    for event in pygame.event.get(): #loop getting keyboard events
         if event.type==QUIT:
             pygame.quit()
             sys.exit()

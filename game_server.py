@@ -6,12 +6,12 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print ("Socket successfully created")
 port = 12345				
 s.bind(('', port))		 
-print ("socket binded to %s" %(port) )
+print ("Socket binded to %s" %(port) )
 s.listen(5)	 
-print ("socket is listening")
+print ("Socket is listening")
 connections = []	
 
-def broadcast(pos,con):
+def broadcast(pos,con): #function broadcasting the movements to everyone else in the network
     for conn in connections:
         if conn!=con:
                 conn.send(pos)
@@ -21,11 +21,8 @@ def client(c,addr):
     connections.append(c)
     while True:
         data = c.recv(1024)
-        #print(data.decode())
-        broadcast(data,c)
+        broadcast(data,c) 
         time.sleep(0.5)
-        # data = str(addr) +'/' + data
-        # broadcast(data)
 
 while True:
     c, addr = s.accept()
