@@ -22,7 +22,7 @@ def client(c,addr):
     while True:
         data = c.recv(1024)
         broadcast(data,c) 
-        time.sleep(0.5)
+        #time.sleep(0.5)
 
 while True:
     c, addr = s.accept()

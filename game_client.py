@@ -46,7 +46,7 @@ def serve(s):
         pygame.display.update()
         fpsClock.tick(FPS)
 
-        time.sleep(0.5)
+        time.sleep(0.1)
 
 thread1 = threading.Thread(target = serve, args = (s,))
 thread1.start()
